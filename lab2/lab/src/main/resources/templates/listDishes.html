@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>List Dishes</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2 class="h2">Dishes</h2>
+
+            <th:block th:if="${error != null}">
+              <p th:text="${error}" class="text-danger"></p>
+            </th:block>
+
+            <div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Dish id</th>
+                            <th>Dish name</th>
+                            <th>Cuisine</th>
+                            <th>Preparation time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dish : ${dishes}">
+                            <td th:text="${dish.dishId}"></td>
+                            <td th:text="${dish.name}"></td>
+                            <td th:text="${dish.cuisine}"></td>
+                            <td th:text="${dish.preparationTime}"></td>
+
+                            <td>
+                              <a th:href="@{'/dishes/dish-form/{id}' (id = ${dish.getId()})}" class="btn btn-primary">Edit</a>
+                            </td>
+
+                            <td class="text-right">
+                                <form th:method="DELETE" th:action="@{'/dishes/delete/{id}' (id = ${dish.getId()})}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    <a href="/dishes/dish-form" class="btn btn-block btn-primary">Add new dish</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
